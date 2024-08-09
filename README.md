@@ -61,10 +61,6 @@ Once installed, the extension will automatically scan your Next.js files and ins
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
-
-[MIT License](LICENSE)
-
 ## Support
 
 If you encounter any problems or have any suggestions, please open an issue on the GitHub repository.

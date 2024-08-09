@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 
-const BUILT_IN_HOOKS = [
+const REACT_HOOKS = [
   "useState",
   "useEffect",
   "useContext",
@@ -14,6 +14,18 @@ const BUILT_IN_HOOKS = [
   "useDeferredValue",
   "useTransition",
   "useId",
+];
+
+const BROWSER_APIS = [
+  "window",
+  "document",
+  "localStorage",
+  "sessionStorage",
+  "navigator",
+  "fetch",
+  "XMLHttpRequest",
+  "addEventListener",
+  "history",
 ];
 
 export function activate(context: vscode.ExtensionContext) {
@@ -62,20 +74,31 @@ function shouldAddUseClient(text: string): boolean {
     return false;
   }
 
-  // Check for built-in hooks
-  if (BUILT_IN_HOOKS.some((hook) => text.includes(hook))) {
+  // Check for React hooks (built-in and custom)
+  if (
+    REACT_HOOKS.some((hook) => text.includes(hook)) ||
+    /\buse[A-Z]\w+/.test(text)
+  ) {
     return true;
   }
 
-  // Check for custom hooks (starting with 'use')
-  const customHookRegex = /\buse[A-Z]\w+/g;
-  if (customHookRegex.test(text)) {
+  // Check for browser APIs
+  if (BROWSER_APIS.some((api) => text.includes(api))) {
     return true;
   }
 
-  // Check for potential third-party hooks (any function call starting with 'use')
-  const thirdPartyHookRegex = /\buse\w+\(/g;
-  if (thirdPartyHookRegex.test(text)) {
+  // Check for React Class components
+  if (/class\s+\w+\s+extends\s+(React\.)?Component/.test(text)) {
+    return true;
+  }
+
+  // Check for event handlers (common in client components)
+  if (/on\w+={/.test(text)) {
+    return true;
+  }
+
+  // Check for dynamic references (often used in client-side interactivity)
+  if (/useRef\(|createRef\(/.test(text)) {
     return true;
   }
 
