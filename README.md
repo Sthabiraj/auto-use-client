@@ -22,8 +22,8 @@ To build and install the extension from source:
 1. Clone the repository:
 
    ```
-   git clone https://github.com/your-username/nextjs-auto-use-client.git
-   cd nextjs-auto-use-client
+   git clone https://github.com/Sthabiraj/auto-use-client.git
+   cd auto-use-client
    ```
 
 2. Install dependencies:
